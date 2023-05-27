@@ -103,7 +103,7 @@ void lx_servo_serial_set_move_time(HardwareSerial &SerialX, uint8_t id, int16_t 
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-void lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time){
+int lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -127,12 +127,13 @@ void lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t*
       return -1;
   }
 
-  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0)
+  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0){
     *position = (int16_t)BYTE_TO_HW(buf[2], buf[1]);
     *time = (int16_t)BYTE_TO_HW(buf[4], buf[3]);
     ret = 0;
-  else
+  }else{
     ret = -1;
+  }
 
 #ifdef LX_SERVO_DEBUG
   Serial.print("Position: ");
@@ -186,13 +187,13 @@ int lx_servo_serial_get_wait_move_time(HardwareSerial &SerialX, uint8_t id, int1
       return -1;
   }
 
-  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0)
+  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0){
     *position = (int16_t)BYTE_TO_HW(buf[2], buf[1]);
     *time = (int16_t)BYTE_TO_HW(buf[4], buf[3]);
     ret = 0;
-  else
+  }else{
     ret = -1;
-
+  }
 #ifdef LX_SERVO_DEBUG
   Serial.print("Position: ");
   Serial.println(*position);
@@ -330,10 +331,6 @@ int lx_servo_serial_get_angle_offset(HardwareSerial &SerialX, uint8_t id){
 // TODO: TEST
 void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t min, uint16_t max){
   byte buf[10];
-  if (position < 0)
-    position = 0;
-  if (position > 1000)
-    position = 1000;
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
   buf[3] = 7;
@@ -347,7 +344,7 @@ void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-void lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max){
+int lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -371,13 +368,13 @@ void lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
       return -1;
   }
 
-  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0)
+  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0){
     *min = BYTE_TO_HW(buf[2], buf[1]);
     *max = BYTE_TO_HW(buf[2], buf[1]);
     ret = 0;
-  else
+  }else{
     ret = -1;
-
+  }
 #ifdef LX_SERVO_DEBUG
   Serial.println(ret);
 #endif
@@ -386,15 +383,11 @@ void lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
 // TODO: TEST
 void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t min_v, uint16_t max_v){
   byte buf[10];
-  if (position < 0)
-    position = 0;
-  if (position > 1000)
-    position = 1000;
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
   buf[3] = 7;
   buf[4] = LX_SERVO_VIN_LIMIT_WRITE;
-  buf[5] = GET_LOW_BYTE(min_V);
+  buf[5] = GET_LOW_BYTE(min_v);
   buf[6] = GET_HIGH_BYTE(min_v);
   buf[7] = GET_LOW_BYTE(max_v);
   buf[8] = GET_HIGH_BYTE(max_v);
@@ -403,7 +396,7 @@ void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-void lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v){
+int lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -427,13 +420,13 @@ void lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* 
       return -1;
   }
 
-  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0)
+  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0){
     *min_v = BYTE_TO_HW(buf[2], buf[1]);
     *max_v = BYTE_TO_HW(buf[2], buf[1]);
     ret = 0;
-  else
+  }else{
     ret = -1;
-
+  }
 #ifdef LX_SERVO_DEBUG
   Serial.println(ret);
 #endif
@@ -443,7 +436,7 @@ void lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* 
 void lx_servo_serial_set_temp_max(HardwareSerial &SerialX, uint8_t id, uint8_t temp){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
-  buf[2] = oldId;
+  buf[2] = id;
   buf[3] = 4;
   buf[4] = LX_SERVO_TEMP_MAX_LIMIT_WRITE;
   buf[5] = temp;
@@ -607,7 +600,7 @@ void lx_servo_serial_set_mode(HardwareSerial &SerialX, uint8_t id, uint8_t Mode,
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id, uint8_t* Mode, uint8_t* speed){
+int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id, uint8_t* mode, uint8_t* speed){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -631,16 +624,18 @@ int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id, uint8_t* Mode,
       return -1;
   }
 
-  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0)
+  if (lx_servo_serial_recieve_handle(SerialX, buf) > 0){
     *mode = BYTE_TO_HW(buf[2], buf[1]);
     *speed = BYTE_TO_HW(buf[4], buf[3]);
     ret = 0;
-  else
+  }else{
     ret = -1;
+  }
 
 #ifdef LX_SERVO_DEBUG
   Serial.println(ret);
 #endif
+  return ret;
 }
 // TODO: TEST
 void lx_servo_serial_set_load_or_unload(HardwareSerial &SerialX, uint8_t id, uint8_t mode){
@@ -693,7 +688,7 @@ int lx_servo_serial_get_load_or_unload(HardwareSerial &SerialX, uint8_t id){
 void lx_servo_serial_set_led_ctrl(HardwareSerial &SerialX, uint8_t id, uint8_t mode){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
-  buf[2] = oldId;
+  buf[2] = id;
   buf[3] = 4;
   buf[4] = LX_SERVO_LED_CTRL_WRITE;
   buf[5] = mode;
@@ -740,7 +735,7 @@ int lx_servo_serial_get_led_ctrl(HardwareSerial &SerialX, uint8_t id){
 void lx_servo_serial_set_led_err(HardwareSerial &SerialX, uint8_t id, uint8_t mode){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
-  buf[2] = oldId;
+  buf[2] = id;
   buf[3] = 4;
   buf[4] = LX_SERVO_LED_ERROR_WRITE;
   buf[5] = mode;
@@ -787,88 +782,22 @@ int lx_servo_serial_get_led_err(HardwareSerial &SerialX, uint8_t id){
 /****************************/
 /* TESTING/DEBUGING SECTION */
 /****************************/
-void read_pos(int* poses){
-  poses[0] = lx_servo_serial_get_pos(Serial, ID00);
-  poses[1] = lx_servo_serial_get_pos(Serial, ID01);
-  poses[2] = lx_servo_serial_get_pos(Serial, ID02);
-#ifdef LX_SERVO_DEBUG
-  Serial.println("POSES");
-  Serial.print("ID00: ");
-  Serial.println(poses[0]);
-  Serial.print("ID01: ");
-  Serial.println(poses[1]);
-  Serial.print("ID02: ");
-  Serial.println(poses[2]);
-#endif
-}
-
-void foo_setup(){
-  pinMode(13, OUTPUT);
-  delay(1000);
-}
-
-void foo(){
+void test_move_time_write(){
   lx_servo_serial_set_move_time(Serial, ID00, 0, 0);
-  lx_servo_serial_set_move_time(Serial, ID01, 0, 0);
-  lx_servo_serial_set_move_time(Serial, ID02, 0, 0);
-  digitalWrite(13, LOW);
-  read_pos(poses_vec);
-  delay(5000);
-  lx_servo_serial_set_move_time(Serial, ID00, 100, 1000);
-  lx_servo_serial_set_move_time(Serial, ID01, 0, 0);
-  lx_servo_serial_set_move_time(Serial, ID02, 0, 0);
-  digitalWrite(13, HIGH);
-  read_pos(poses_vec);
-  delay(5000);
-  lx_servo_serial_set_move_time(Serial, ID00, 100, 1000);
-  lx_servo_serial_set_move_time(Serial, ID01, 100, 1000);
-  lx_servo_serial_set_move_time(Serial, ID02, 0, 0);
-  digitalWrite(13, LOW);
-  read_pos(poses_vec);
-  delay(5000);
-  lx_servo_serial_set_move_time(Serial, ID00, 0, 0);
-  lx_servo_serial_set_move_time(Serial, ID01, 100, 1000);
-  lx_servo_serial_set_move_time(Serial, ID02, 100, 1000); 
-  digitalWrite(13, HIGH);
-  read_pos(poses_vec);
-  delay(5000);
-}
-
-void set_id_setup(){
-  pinMode(13, OUTPUT);
+  delay(1000);
+  lx_servo_serial_set_move_time(Serial, ID00, 500, 1000);
+  delay(1500);
+  lx_servo_serial_set_move_time(Serial, ID00, 1000, 0);
   delay(1000);
 }
 
-void set_id(){
-  delay(2000);
-  digitalWrite(13, HIGH);
-  lx_servo_serial_set_id(Serial, IDX, ID02);
-  digitalWrite(13, LOW);
-  delay(2000);
-}
-
-void read_id_setup(){
-  pinMode(13, OUTPUT);
-  delay(1000);
-}
-
-void read_id(){
-  int ret;
-  delay(1000);
-  digitalWrite(13, HIGH);
-  ret = lx_servo_serial_get_id(Serial);
-  digitalWrite(13, LOW);
-  delay(1000);
-}
 
 void setup(){
   // put your setup code here, to run once:
   Serial.begin(115200);
-  foo_setup();
 }
 
 void loop(){
   // put your main code here, to run repeatedly:
-  foo();
-  read_pos(poses_vec);
+  test_move_time_write();
 }

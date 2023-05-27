@@ -246,8 +246,12 @@ void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
  *  - uint8_t id: the servo id.
  *  - uint16_t* min: the minimal value of the angle [0, 1000] -> [0, 240]deg
  *  - uint16_t* max: the max value of the angle [0, 1000] -> [0, 240]deg
+ * 
+ * outputs:
+ * --------
+ *  - 0 on sucess, -1 on failure
  */
-void lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max);
+int lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max);
 
 // TODO: implement
 /*
@@ -273,8 +277,12 @@ void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
  *  - uint8_t id: the servo id.
  *  - uint16_t* min_v: the min voltage value [4500, 12000] mV
  *  - uint16_t* max_v: the max voltage value [4500, 12000] mV
+ *  
+ * outputs:
+ * --------
+ *  - 0 on sucess, -1 on failure
  */
-void lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v);
+int lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v);
 
 // TODO: implement
 /*
