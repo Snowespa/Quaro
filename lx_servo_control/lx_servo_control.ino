@@ -1,4 +1,4 @@
-#include "lx_servo_control.h"
+#include "lx_servo_control.hpp"
 
 void debug_buf(byte buf[], const char* text){
 #ifdef LX_SERVO_DEBUG
@@ -138,7 +138,7 @@ int lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* 
 #ifdef LX_SERVO_DEBUG
   Serial.print("Position: ");
   Serial.println(*position);
-  Serial.println("time: ");
+  Serial.print("time: ");
   Serial.println(*time);
 #endif
   return ret;
@@ -777,27 +777,4 @@ int lx_servo_serial_get_led_err(HardwareSerial &SerialX, uint8_t id){
   Serial.println(ret);
 #endif
   return ret;
-}
-
-/****************************/
-/* TESTING/DEBUGING SECTION */
-/****************************/
-void test_move_time_write(){
-  lx_servo_serial_set_move_time(Serial, ID00, 0, 0);
-  delay(1000);
-  lx_servo_serial_set_move_time(Serial, ID00, 500, 1000);
-  delay(1500);
-  lx_servo_serial_set_move_time(Serial, ID00, 1000, 0);
-  delay(1000);
-}
-
-
-void setup(){
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-}
-
-void loop(){
-  // put your main code here, to run repeatedly:
-  test_move_time_write();
 }

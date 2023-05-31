@@ -37,7 +37,7 @@
 #define LX_SERVO_LED_ERROR_WRITE      35
 #define LX_SERVO_LED_ERROR_READ       36
 
-#define LX_SERVO_DEBUG 1 /*Debug: print debug value*/
+//#define LX_SERVO_DEBUG 0 /*Debug: print debug value*/
 
 /* The 12 servos that will be used on quaro */
 #define ID00 0
