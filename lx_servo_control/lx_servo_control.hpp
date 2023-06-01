@@ -54,6 +54,8 @@
 #define ID11 11
 #define IDX 254
 
+#define BAUD 115200
+
 int poses_vec[3];
 
 /*

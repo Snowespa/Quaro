@@ -69,14 +69,13 @@ void test_read_temp(){
   delay(10);
 }
 
+// put your setup code here, to run once:
+// void setup(){
+//   Serial.begin(115200);
+//   delay(1000);
+// }
 
-void setup(){
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  delay(1000);
-}
-
-void loop(){
-  // put your main code here, to run repeatedly:
-  test_read_temp();
-}
+// put your main code here, to run repeatedly:
+// void loop(){
+//   test_read_temp();
+// }
