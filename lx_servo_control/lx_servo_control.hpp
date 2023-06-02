@@ -1,6 +1,8 @@
 #ifndef __LX_SERVO_CONTROL_H__
 #define __LX_SERVO_CONTROL_H__
 
+
+#include <SoftwareSerial.h>
 #define GET_LOW_BYTE(A) (uint8_t)(A) //Macro function get lower bits of A
 #define GET_HIGH_BYTE(A) (uint8_t)((A) >> 8) //Macro function get higher 8 bites of A
 //Put A as higher 8 bits, A as lower 8 bits, returns 
@@ -76,14 +78,14 @@ byte lx_servo_check_sum(byte buf []);
  * 
  * input:
  * ------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - byte* return array.
  * 
  * output:
  * -------
  *  - Array containing the return value.
  */
-int lx_servo_serial_recieve_handle(HardwareSerial &SerialX, byte* ret);
+int lx_servo_serial_recieve_handle(SoftwareSerial &SerialX, byte* ret);
 
 /*
  * Rotates a servo contected to the serial 
@@ -94,26 +96,26 @@ int lx_servo_serial_recieve_handle(HardwareSerial &SerialX, byte* ret);
  * 
  * input:
  * ------
- *  - HardwareSerial: the serial device 
+ *  - SoftwareSerial: the serial device 
  *      to use for communication.
  *  - uint8_t id: the id servo to control.
  *  - uint16_t position: the angle position to set
  *      between [0-1000] corresponding to [0-240] degrees.
  *  - uint16_t time: time range between [0-30000]ms. 
  */
-void lx_servo_serial_set_move_time(HardwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time);
+void lx_servo_serial_set_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time);
 
 /*
  * Gets the angle and time value sent by command move time.
  * 
  * input:
  * ------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - int16_t* position, pointer to the angle input varialbe
  *  - uint16_t* time. pointer to the time output varialbe
  */
-int lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time);
+int lx_servo_serial_get_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time);
 
 // TODO: implement
 /*
@@ -124,12 +126,12 @@ int lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* 
  * 
  * input:
  * ------
- *  - HardwareSerial, the device used for the serial communication.
+ *  - SoftwareSerial, the device used for the serial communication.
  *  - uint8_t id: the servo id.
  *  - uint16_t angle: the servo angle [0-1000] -> [0-240] deg.
  *  - uint16_t time: the preset time [0-30.000]ms
  */
-void lx_servo_serial_set_wait_move_time(HardwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time);
+void lx_servo_serial_set_wait_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time);
 
 // TODO: implement
 /*
@@ -137,12 +139,12 @@ void lx_servo_serial_set_wait_move_time(HardwareSerial &SerialX, uint8_t id, int
  * 
  * input:
  * ------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - int16_t* position, pointer to the angle input varialbe
  *  - uint16_t* time. pointer to the time output varialbe
  */
-int lx_servo_serial_get_wait_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time);
+int lx_servo_serial_get_wait_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time);
 
 // TODO: implement
 /*
@@ -150,40 +152,40 @@ int lx_servo_serial_get_wait_move_time(HardwareSerial &SerialX, uint8_t id, int1
  * 
  * input:
  * ------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  */
-void lx_servo_serial_move_start(HardwareSerial &SerialX, uint8_t id);
+void lx_servo_serial_move_start(SoftwareSerial &SerialX, uint8_t id);
 
 /*
  * Stops the servo's execution immediately.
  * 
  * input:
  * ------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  */
-void lx_servo_serial_move_stop(HardwareSerial &SerialX, uint8_t id);
+void lx_servo_serial_move_stop(SoftwareSerial &SerialX, uint8_t id);
 
 /*
  * Set the servo id to a new id.
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t oldId: the old servo id.
  *  - uint8_t newId: the new servo id.
  */
-void lx_servo_serial_set_id(HardwareSerial &SerialX, uint8_t oldId, uint8_t newId);
+void lx_servo_serial_set_id(SoftwareSerial &SerialX, uint8_t oldId, uint8_t newId);
 
 /*
  * Get the servo id that is connected on the bus.
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  */
-int lx_servo_serial_get_id(HardwareSerial &SerialX);
+int lx_servo_serial_get_id(SoftwareSerial &SerialX);
 
 // TODO: implement
 /*
@@ -192,11 +194,11 @@ int lx_servo_serial_get_id(HardwareSerial &SerialX);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - signed char dev, the deviation value [-125, 125] -> [-30, 30] deg.
  */
-void lx_servo_serial_angle_offset_adjuist(HardwareSerial &SerialX);
+void lx_servo_serial_angle_offset_adjuist(SoftwareSerial &SerialX);
 
 // TODO: implement
 /*
@@ -205,10 +207,10 @@ void lx_servo_serial_angle_offset_adjuist(HardwareSerial &SerialX);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  */
-void lx_servo_serial_set_angle_offset(HardwareSerial &SerialX, uint8_t id);
+void lx_servo_serial_set_angle_offset(SoftwareSerial &SerialX, uint8_t id);
 
 // TODO: implement
 /*
@@ -216,14 +218,14 @@ void lx_servo_serial_set_angle_offset(HardwareSerial &SerialX, uint8_t id);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  * 
  * output:
  * -------
  *  - int, the offset value assigned to the servo.
  */
-int lx_servo_serial_get_angle_offset(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_angle_offset(SoftwareSerial &SerialX, uint8_t id);
 
 // TODO: implement
 /*
@@ -231,12 +233,12 @@ int lx_servo_serial_get_angle_offset(HardwareSerial &SerialX, uint8_t id);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint16_t min: the minimal value of the angle [0, 1000] -> [0, 240]deg
  *  - uint16_t max: the max value of the angle [0, 1000] -> [0, 240]deg
  */
-void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t min, uint16_t max);
+void lx_servo_serial_set_ang_limit(SoftwareSerial &SerialX, uint8_t id, uint16_t min, uint16_t max);
 
 // TODO: implement
 /*
@@ -244,7 +246,7 @@ void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint16_t* min: the minimal value of the angle [0, 1000] -> [0, 240]deg
  *  - uint16_t* max: the max value of the angle [0, 1000] -> [0, 240]deg
@@ -253,7 +255,7 @@ void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
  * --------
  *  - 0 on sucess, -1 on failure
  */
-int lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max);
+int lx_servo_serial_get_ang_limit(SoftwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max);
 
 // TODO: implement
 /*
@@ -262,12 +264,12 @@ int lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t*
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint16_t min_v: the min voltage value [4500, 12000] mV
  *  - uint16_t max_v: the max voltage value [4500, 12000] mV
  */
-void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t min_v, uint16_t max_v);
+void lx_servo_serial_set_vin_limit(SoftwareSerial &SerialX, uint8_t id, uint16_t min_v, uint16_t max_v);
 
 // TODO: implement
 /*
@@ -275,7 +277,7 @@ void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint16_t* min_v: the min voltage value [4500, 12000] mV
  *  - uint16_t* max_v: the max voltage value [4500, 12000] mV
@@ -284,7 +286,7 @@ void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
  * --------
  *  - 0 on sucess, -1 on failure
  */
-int lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v);
+int lx_servo_serial_get_vin_lim(SoftwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v);
 
 // TODO: implement
 /*
@@ -294,11 +296,11 @@ int lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* m
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint8_t temp: the max temperature value [50-100]deg Celsius
  */
-void lx_servo_serial_set_temp_max(HardwareSerial &SerialX, uint8_t id, uint8_t temp);
+void lx_servo_serial_set_temp_max(SoftwareSerial &SerialX, uint8_t id, uint8_t temp);
 
 // TODO: implement
 /*
@@ -306,14 +308,14 @@ void lx_servo_serial_set_temp_max(HardwareSerial &SerialX, uint8_t id, uint8_t t
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *
  * output:
  * -------
  *  - int temp. The max temperature
  */
-int lx_servo_serial_get_temp_max(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_temp_max(SoftwareSerial &SerialX, uint8_t id);
 
 // TODO: implement
 /*
@@ -321,14 +323,14 @@ int lx_servo_serial_get_temp_max(HardwareSerial &SerialX, uint8_t id);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *
  * output:
  * -------
  *  - int temp. The servo temperature
  */
-int lx_servo_serial_get_temp(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_temp(SoftwareSerial &SerialX, uint8_t id);
 
 // TODO: implement
 /*
@@ -336,40 +338,40 @@ int lx_servo_serial_get_temp(HardwareSerial &SerialX, uint8_t id);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *
  * output:
  * -------
  *  - int V. The current voltage
  */
-int lx_servo_serial_get_vin(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_vin(SoftwareSerial &SerialX, uint8_t id);
 
 /*
  * Reads the position of the servo.
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *
  * output:
  * -------
  *  - int pos. The current position of the srevo
  */
-int lx_servo_serial_get_pos(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_pos(SoftwareSerial &SerialX, uint8_t id);
 
 /*
  * Selects the actuator mode. Does not support power down save.
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint8_t mode: the mode of the servo 0 for servo mode 1 for motor mode.
  *  - int16_t rot_speed: [-1000; 1000] only valid in motor mode.
  */
-void lx_servo_serial_set_mode(HardwareSerial &SerialX, uint8_t id, uint8_t mode, uint16_t speed);
+void lx_servo_serial_set_mode(SoftwareSerial &SerialX, uint8_t id, uint8_t mode, uint16_t speed);
 
 // TODO: implement
 /*
@@ -377,12 +379,12 @@ void lx_servo_serial_set_mode(HardwareSerial &SerialX, uint8_t id, uint8_t mode,
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint8_t mode: the mode of the servo 0 for servo mode 1 for motor mode.
  *  - int16_t rot_speed: [-1000; 1000] 
  */
-int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_mode(SoftwareSerial &SerialX, uint8_t id);
 
 /*
  * Sets Load or unload servo mode. In unload mode, the servo isn't 
@@ -390,12 +392,12 @@ int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint8_t mode: the mode of the servo 0 unload mode (no torque), 1 for loaded mode (active torque).
  *      default mode is 0
  */
-void lx_servo_serial_set_load_or_unload(HardwareSerial &SerialX, uint8_t id, uint8_t mode);
+void lx_servo_serial_set_load_or_unload(SoftwareSerial &SerialX, uint8_t id, uint8_t mode);
 
 // TODO: implement
 /*
@@ -403,14 +405,14 @@ void lx_servo_serial_set_load_or_unload(HardwareSerial &SerialX, uint8_t id, uin
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  * 
  * outputs:
  * --------
  *  - int the current mode.
  */
-int lx_servo_serial_get_load_or_unload(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_load_or_unload(SoftwareSerial &SerialX, uint8_t id);
 
 // TODO: implement
 /*
@@ -418,11 +420,11 @@ int lx_servo_serial_get_load_or_unload(HardwareSerial &SerialX, uint8_t id);
  * 
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint8_t mode: 0 off, 1 on.
  */
-void lx_servo_serial_set_led_ctrl(HardwareSerial &SerialX, uint8_t id, uint8_t mode);
+void lx_servo_serial_set_led_ctrl(SoftwareSerial &SerialX, uint8_t id, uint8_t mode);
 
 // TODO: implement
 /*
@@ -430,14 +432,14 @@ void lx_servo_serial_set_led_ctrl(HardwareSerial &SerialX, uint8_t id, uint8_t m
  *
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  * 
  * outputs:
  * --------
  *  - int mode: the current control led mode.
  */
-int lx_servo_serial_get_led_ctrl(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_led_ctrl(SoftwareSerial &SerialX, uint8_t id);
 
 // TODO: implement
 /*
@@ -445,7 +447,7 @@ int lx_servo_serial_get_led_ctrl(HardwareSerial &SerialX, uint8_t id);
  *
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  *  - uint8_t mode: [0-7]
  *      - 0 no alarm
@@ -460,7 +462,7 @@ int lx_servo_serial_get_led_ctrl(HardwareSerial &SerialX, uint8_t id);
  * outputs:
  * --------
  */
-void lx_servo_serial_set_led_err(HardwareSerial &SerialX, uint8_t id, uint8_t mode);
+void lx_servo_serial_set_led_err(SoftwareSerial &SerialX, uint8_t id, uint8_t mode);
 
 // TODO: implement
 /*
@@ -468,13 +470,13 @@ void lx_servo_serial_set_led_err(HardwareSerial &SerialX, uint8_t id, uint8_t mo
  *
  * inputs:
  * -------
- *  - HardwareSerial, the device for the serial communication
+ *  - SoftwareSerial, the device for the serial communication
  *  - uint8_t id: the servo id.
  * 
  * outputs:
  * --------
  *  - int mode: the current error led mode
  */
-int lx_servo_serial_get_led_err(HardwareSerial &SerialX, uint8_t id);
+int lx_servo_serial_get_led_err(SoftwareSerial &SerialX, uint8_t id);
 
 #endif

@@ -23,7 +23,7 @@ byte lx_servo_check_sum(byte buf []){
   return i;
 }
 
-int lx_servo_serial_recieve_handle(HardwareSerial &SerialX, byte* ret){
+int lx_servo_serial_recieve_handle(SoftwareSerial &SerialX, byte* ret){
   bool frameStarted = false;
   byte frameCount = 0;
   byte dataCount = 0;
@@ -84,7 +84,7 @@ int lx_servo_serial_recieve_handle(HardwareSerial &SerialX, byte* ret){
   }
 }
 // TODO: TEST
-void lx_servo_serial_set_move_time(HardwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time){
+void lx_servo_serial_set_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time){
   byte buf[10];
   if (position < 0)
     position = 0;
@@ -103,7 +103,7 @@ void lx_servo_serial_set_move_time(HardwareSerial &SerialX, uint8_t id, int16_t 
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-int lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time){
+int lx_servo_serial_get_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -144,7 +144,7 @@ int lx_servo_serial_get_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* 
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_wait_move_time(HardwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time){
+void lx_servo_serial_set_wait_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t position, uint16_t time){
   byte buf[10];
   if (position < 0)
     position = 0;
@@ -163,7 +163,7 @@ void lx_servo_serial_set_wait_move_time(HardwareSerial &SerialX, uint8_t id, int
   SerialX.write(buf, 10);
 }
  // TODO: TEST
-int lx_servo_serial_get_wait_move_time(HardwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time){
+int lx_servo_serial_get_wait_move_time(SoftwareSerial &SerialX, uint8_t id, int16_t* position, uint16_t* time){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -203,7 +203,7 @@ int lx_servo_serial_get_wait_move_time(HardwareSerial &SerialX, uint8_t id, int1
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_move_start(HardwareSerial &SerialX, uint8_t id){
+void lx_servo_serial_move_start(SoftwareSerial &SerialX, uint8_t id){
   byte buf[6];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -214,7 +214,7 @@ void lx_servo_serial_move_start(HardwareSerial &SerialX, uint8_t id){
   SerialX.write(buf, 6);
 }
 // TODO: TEST
-void lx_servo_serial_stop_move(HardwareSerial &SerialX, uint8_t id){
+void lx_servo_serial_stop_move(SoftwareSerial &SerialX, uint8_t id){
   byte buf[6];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -225,7 +225,7 @@ void lx_servo_serial_stop_move(HardwareSerial &SerialX, uint8_t id){
   SerialX.write(buf, 6);
 }
 // TODO: TEST
-void lx_servo_serial_set_id(HardwareSerial &SerialX, uint8_t oldId, uint8_t newId){
+void lx_servo_serial_set_id(SoftwareSerial &SerialX, uint8_t oldId, uint8_t newId){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = oldId;
@@ -237,7 +237,7 @@ void lx_servo_serial_set_id(HardwareSerial &SerialX, uint8_t oldId, uint8_t newI
   SerialX.write(buf, 7);
 }
 // TODO: TEST
-int lx_servo_serial_get_id(HardwareSerial &SerialX){
+int lx_servo_serial_get_id(SoftwareSerial &SerialX){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -271,7 +271,7 @@ int lx_servo_serial_get_id(HardwareSerial &SerialX){
   return ret;
 } 
 // TODO: TEST
-void lx_servo_serial_angle_offset_adjuist(HardwareSerial &SerialX, uint8_t id, uint8_t adjust){
+void lx_servo_serial_angle_offset_adjuist(SoftwareSerial &SerialX, uint8_t id, uint8_t adjust){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -283,7 +283,7 @@ void lx_servo_serial_angle_offset_adjuist(HardwareSerial &SerialX, uint8_t id, u
   SerialX.write(buf, 7);
 }
 // TODO: TEST
-void lx_servo_serial_set_angle_offset(HardwareSerial &SerialX, uint8_t id){
+void lx_servo_serial_set_angle_offset(SoftwareSerial &SerialX, uint8_t id){
   byte buf[6];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -294,7 +294,7 @@ void lx_servo_serial_set_angle_offset(HardwareSerial &SerialX, uint8_t id){
   SerialX.write(buf, 6);
 }
 // TODO: TEST
-int lx_servo_serial_get_angle_offset(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_angle_offset(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -329,7 +329,7 @@ int lx_servo_serial_get_angle_offset(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t min, uint16_t max){
+void lx_servo_serial_set_ang_limit(SoftwareSerial &SerialX, uint8_t id, uint16_t min, uint16_t max){
   byte buf[10];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -344,7 +344,7 @@ void lx_servo_serial_set_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-int lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max){
+int lx_servo_serial_get_ang_limit(SoftwareSerial &SerialX, uint8_t id, uint16_t* min, uint16_t* max){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -381,7 +381,7 @@ int lx_servo_serial_get_ang_limit(HardwareSerial &SerialX, uint8_t id, uint16_t*
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t min_v, uint16_t max_v){
+void lx_servo_serial_set_vin_limit(SoftwareSerial &SerialX, uint8_t id, uint16_t min_v, uint16_t max_v){
   byte buf[10];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -396,7 +396,7 @@ void lx_servo_serial_set_vin_limit(HardwareSerial &SerialX, uint8_t id, uint16_t
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-int lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v){
+int lx_servo_serial_get_vin_lim(SoftwareSerial &SerialX, uint8_t id, uint16_t* min_v, uint16_t* max_v){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -433,7 +433,7 @@ int lx_servo_serial_get_vin_lim(HardwareSerial &SerialX, uint8_t id, uint16_t* m
   return ret;
 }
 // TODO TEST
-void lx_servo_serial_set_temp_max(HardwareSerial &SerialX, uint8_t id, uint8_t temp){
+void lx_servo_serial_set_temp_max(SoftwareSerial &SerialX, uint8_t id, uint8_t temp){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -445,7 +445,7 @@ void lx_servo_serial_set_temp_max(HardwareSerial &SerialX, uint8_t id, uint8_t t
   SerialX.write(buf, 7);
 }
 // TODO: TEST
-int lx_servo_serial_get_temp_max(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_temp_max(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -480,7 +480,7 @@ int lx_servo_serial_get_temp_max(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-int lx_servo_serial_get_temp(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_temp(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -515,7 +515,7 @@ int lx_servo_serial_get_temp(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-int lx_servo_serial_get_vin(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_vin(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -550,7 +550,7 @@ int lx_servo_serial_get_vin(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-int lx_servo_serial_get_pos(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_pos(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -585,7 +585,7 @@ int lx_servo_serial_get_pos(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_mode(HardwareSerial &SerialX, uint8_t id, uint8_t Mode, int16_t speed){
+void lx_servo_serial_set_mode(SoftwareSerial &SerialX, uint8_t id, uint8_t Mode, int16_t speed){
   byte buf[10];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -600,7 +600,7 @@ void lx_servo_serial_set_mode(HardwareSerial &SerialX, uint8_t id, uint8_t Mode,
   SerialX.write(buf, 10);
 }
 // TODO: TEST
-int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id, uint8_t* mode, uint8_t* speed){
+int lx_servo_serial_get_mode(SoftwareSerial &SerialX, uint8_t id, uint8_t* mode, uint8_t* speed){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -638,7 +638,7 @@ int lx_servo_serial_get_mode(HardwareSerial &SerialX, uint8_t id, uint8_t* mode,
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_load_or_unload(HardwareSerial &SerialX, uint8_t id, uint8_t mode){
+void lx_servo_serial_set_load_or_unload(SoftwareSerial &SerialX, uint8_t id, uint8_t mode){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -650,7 +650,7 @@ void lx_servo_serial_set_load_or_unload(HardwareSerial &SerialX, uint8_t id, uin
   SerialX.write(buf, 7);
 }
 // TODO: TEST
-int lx_servo_serial_get_load_or_unload(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_load_or_unload(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -685,7 +685,7 @@ int lx_servo_serial_get_load_or_unload(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_led_ctrl(HardwareSerial &SerialX, uint8_t id, uint8_t mode){
+void lx_servo_serial_set_led_ctrl(SoftwareSerial &SerialX, uint8_t id, uint8_t mode){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -697,7 +697,7 @@ void lx_servo_serial_set_led_ctrl(HardwareSerial &SerialX, uint8_t id, uint8_t m
   SerialX.write(buf, 7);
 }
 // TODO: TEST
-int lx_servo_serial_get_led_ctrl(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_led_ctrl(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
@@ -732,7 +732,7 @@ int lx_servo_serial_get_led_ctrl(HardwareSerial &SerialX, uint8_t id){
   return ret;
 }
 // TODO: TEST
-void lx_servo_serial_set_led_err(HardwareSerial &SerialX, uint8_t id, uint8_t mode){
+void lx_servo_serial_set_led_err(SoftwareSerial &SerialX, uint8_t id, uint8_t mode){
   byte buf[7];
   buf[0] = buf[1] = LX_SERVO_FRAME_HEADER;
   buf[2] = id;
@@ -744,7 +744,7 @@ void lx_servo_serial_set_led_err(HardwareSerial &SerialX, uint8_t id, uint8_t mo
   SerialX.write(buf, 7);
 }
 // TODO: TEST
-int lx_servo_serial_get_led_err(HardwareSerial &SerialX, uint8_t id){
+int lx_servo_serial_get_led_err(SoftwareSerial &SerialX, uint8_t id){
   int count = 10000;
   int ret;
   byte buf[6];
