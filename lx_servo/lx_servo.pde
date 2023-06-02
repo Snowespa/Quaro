@@ -1,10 +1,7 @@
-/*
- * rosserial Publisher Example
- * Prints "hello world!"
+/* 
+ * rosserial Subscriber Example
+ * Blinks an LED on callback
  */
-
-// Use the following line if you have a Leonardo or MKR1000
-//#define USE_USBCON
 
 #include <ros.h>
 #include <std_msgs/Int16.h>
@@ -21,23 +18,24 @@ ros::NodeHandle nh;
 std_msgs::Int16 pos_msg;
 ros::Publisher position("position", &pos_msg);
 
-// void setPosCb(const std_msgs::Int16& move_msg){
-//   lx_servo_serial_set_move_time(swSerial, ID00, move_msg.data, 0);
-// }
+void setPosCb(const std_msgs::Int16& move_msg){
+  lx_servo_serial_set_move_time(swSerial, ID00, move_msg.data, 0);
+}
 
-// ros::Subscriber<std_msgs::Int16> sub("move", &setPosCb);
+ros::Subscriber<std_msgs::Int16> sub("move", &setPosCb);
 
 void setup()
 {
     nh.initNode();
     nh.advertise(position);
+    nh.subscribe(sub);
     nh.getHardware()->setBaud(BAUD);
     // Define pin modes for TX and RX
     pinMode(rxPin, INPUT);
     pinMode(txPin, OUTPUT);
     // Set the baud rate for the SoftwareSerial object
     swSerial.begin(BAUD);
-    // nh.subscribe(sub);
+    
     delay(10);
 
 }
@@ -49,3 +47,4 @@ void loop()
   nh.spinOnce();
   delay(10);
 }
+
