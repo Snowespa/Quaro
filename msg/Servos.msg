@@ -1,0 +1,2 @@
+std_msgs/UInt8MultiArray ids
+std_msgs/UInt16MultiArray positions
