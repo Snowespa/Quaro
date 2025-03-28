@@ -5,7 +5,17 @@
   <xacro:property name="velocity" value="0.1"/>
 
   <xacro:macro name="leg" params="n xyz rpy parent">
-  <!-- Joint A1 or B1 -->
+
+  <!--
+  <joint name="leg${n}-servo-joint" type="fixed">
+    <parent link="${parent}"/>
+    <child link="leg${n}-servo1"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+ 
+  <xacro:lx224 name="leg${n}-servo1" rpy="0 0 0" xyz="0 0 0" color="red"/>
+  -->
+  <!-- Leg Joint 1 -->
   <joint name="leg${n}_joint1" type="revolute">
     <parent link="${parent}"/>
     <child link="leg${n}_link1"/>
@@ -19,15 +29,16 @@
       <geometry>
         <box size="0.1 0.4 0.1"/>
       </geometry>
-      <origin xyz="0.0 0.2 0.0" rpy="0 0 0"/>
+      <origin xyz="0.0 0.4 0.0" rpy="0 0 0"/>
     </visual>
   </link>
 
+  <!-- Leg Joint 2 -->
   <joint name="leg${n}_joint2" type="revolute">
     <parent link="leg${n}_link1"/>
     <child link="leg${n}_link2"/>
     <origin xyz="0.0 0.6 0.0" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
+    <axis xyz="0 0 1"/>
     <limit effort="100.0" velocity="1.0" lower="-${2*pi/3}" upper="${2*pi/3}"/>
   </joint>
 
@@ -36,24 +47,25 @@
       <geometry>
         <box size="0.1 0.4 0.1"/>
       </geometry>
-      <origin xyz="0.0 0.2 0.0" rpy="0 0 0"/>
+      <origin xyz="0.0 0.4 0.0" rpy="0 0 0"/>
     </visual>
   </link>
 
-  <!-- Joint A3 or B3 -->
+  <!-- Leg Joint 3 -->
   <joint name="leg${n}_joint3" type="revolute">
     <parent link="leg${n}_link2"/>
     <child link="leg${n}_link3"/>
     <origin xyz="0.0 0.6 0.0" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
+    <axis xyz="0 0 1"/>
     <limit effort="100.0" velocity="1.0" lower="-${2*pi/3}" upper="${2*pi/3}"/>
   </joint>
+
   <link name="leg${n}_link3">
     <visual>
       <geometry>
         <box size="0.1 0.4 0.1"/>
       </geometry>
-      <origin xyz="0.0 0.2 0.0" rpy="0 0 0"/>
+      <origin xyz="0.0 0.4 0.0" rpy="0 0 0"/>
     </visual>
   </link>
   </xacro:macro>

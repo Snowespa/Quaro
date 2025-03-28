@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot name="lx224-hv-servo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="lx224" params="name rpy xyz color">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <mesh filename="package://quaro_description/meshes/LX-224HV.stl" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <material name="${color}"/>
+        <origin rpy="${rpy}" xyz="${xyz}"/>
+      </visual>
+    </link>
+  </xacro:macro>
+</robot>

@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <robot name="quaro" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  
-  <xacro:include filename="$(find quaro_description)/urdf/leg/leg.0.0.xacro"/>
+  <!-- Various constant definitions -->
   <xacro:include filename='$(find quaro_description)/urdf/common/constants.xacro'/>
-
-
+  <!-- Servo visual -->
+  <xacro:include filename="$(find quaro_description)/urdf/common/lx-224hv.xacro"/>
+  <!-- Material Colors -->
+  <xacro:include filename="$(find quaro_description)/urdf/common/colors.xacro"/>
+  <!-- Leg macro -->
+  <xacro:include filename="$(find quaro_description)/urdf/leg/leg.0.0.xacro"/>
   <!-- Base Link -->
   <link name="base_link">
     <visual>
@@ -17,8 +20,8 @@
   </link>
 
   <!-- Chain A -->
-  <xacro:leg n="1" parent="base_link" xyz="0.0 -0.2 0.0" rpy="${pi} 0 0"/>
+  <xacro:leg n="1" parent="base_link" xyz="0.0 -0.4 0.0" rpy="${pi} 0 ${pi/4}"/>
   <!-- Chain B -->
-  <xacro:leg n="2" parent="base_link" xyz="0.0 0.2 0.0" rpy="${pi} 0 -${pi}"/>
+  <xacro:leg n="2" parent="base_link" xyz="0.0 0.4 0.0" rpy="${pi} 0 ${3*pi/4}"/>
 
 </robot>

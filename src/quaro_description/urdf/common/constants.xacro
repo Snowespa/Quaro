@@ -2,5 +2,5 @@
 <robot name="quaro-leg" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Pi is already defined -->
   <!-- <xacro:property name="pi" value="3.14159265359"/> -->
-
+  <xacro:property name="scale" value="${1e-3}"/>
 </robot>
