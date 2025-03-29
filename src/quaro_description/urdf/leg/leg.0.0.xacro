@@ -5,67 +5,83 @@
   <xacro:property name="velocity" value="0.1"/>
 
   <xacro:macro name="leg" params="n xyz rpy parent">
-
-  <!--
-  <joint name="leg${n}-servo-joint" type="fixed">
+  
+  <joint name="leg${n}_servo1_joint" type="fixed">
     <parent link="${parent}"/>
-    <child link="leg${n}-servo1"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <child link="leg${n}_servo1"/>
+    <origin xyz="${xyz}" rpy="${rpy}"/>
   </joint>
+  
+  <link name="leg${n}_servo1">
+    <visual>
+      <geometry>
+        <mesh filename="package://quaro_description/meshes/servo-hip.stl" scale="${scale} ${scale} ${scale}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
  
-  <xacro:lx224 name="leg${n}-servo1" rpy="0 0 0" xyz="0 0 0" color="red"/>
-  -->
   <!-- Leg Joint 1 -->
   <joint name="leg${n}_joint1" type="revolute">
-    <parent link="${parent}"/>
+    <parent link="leg${n}_servo1"/>
     <child link="leg${n}_link1"/>
-    <origin xyz="${xyz}" rpy="${rpy}"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
     <limit effort="100.0" velocity="1.0" lower="-${2*pi/3}" upper="${2*pi/3}"/>
   </joint>
 
   <link name="leg${n}_link1">
     <visual>
       <geometry>
-        <box size="0.1 0.4 0.1"/>
+        <mesh filename="package://quaro_description/meshes/hip.stl" scale="${scale} ${scale} ${scale}"/>
       </geometry>
-      <origin xyz="0.0 0.4 0.0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
     </visual>
   </link>
 
-  <!-- Leg Joint 2 -->
-  <joint name="leg${n}_joint2" type="revolute">
+  <joint name="leg${n}_servo2_joint" type="revolute">
     <parent link="leg${n}_link1"/>
     <child link="leg${n}_link2"/>
-    <origin xyz="0.0 0.6 0.0" rpy="0 0 0"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="0.04 0 0" rpy="-${pi/2} 0 ${pi}"/>
+    <axis xyz="0 1 0"/>
     <limit effort="100.0" velocity="1.0" lower="-${2*pi/3}" upper="${2*pi/3}"/>
   </joint>
 
   <link name="leg${n}_link2">
     <visual>
       <geometry>
-        <box size="0.1 0.4 0.1"/>
+        <mesh filename="package://quaro_description/meshes/knee.stl" scale="${scale} ${scale} ${scale}"/>
       </geometry>
-      <origin xyz="0.0 0.4 0.0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
     </visual>
   </link>
 
-  <!-- Leg Joint 3 -->
-  <joint name="leg${n}_joint3" type="revolute">
+  <joint name="leg${n}_servo3_joint" type="revolute">
     <parent link="leg${n}_link2"/>
     <child link="leg${n}_link3"/>
-    <origin xyz="0.0 0.6 0.0" rpy="0 0 0"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="-0.054 0 0.015" rpy="${pi} 0 0"/>
+    <axis xyz="0 1 0"/>
     <limit effort="100.0" velocity="1.0" lower="-${2*pi/3}" upper="${2*pi/3}"/>
   </joint>
 
   <link name="leg${n}_link3">
     <visual>
       <geometry>
-        <box size="0.1 0.4 0.1"/>
+        <mesh filename="package://quaro_description/meshes/shin.stl" scale="${scale} ${scale} ${scale}"/>
       </geometry>
-      <origin xyz="0.0 0.4 0.0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
     </visual>
   </link>
   </xacro:macro>
