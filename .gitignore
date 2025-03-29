@@ -1,5 +1,4 @@
 *.urdf
-*.stl
 build/
 install/
 log/
