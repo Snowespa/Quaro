@@ -32,7 +32,7 @@ Ros2HwPiHat::Ros2HwPiHat() : Node("ros2_hw_pi_hat_interface"), board() {
       servos.push_back(id.value());
     }
   }
-  RCLCPP_INFO(this->get_logger(), "Found '%lu'", servos.size());
+  RCLCPP_INFO(this->get_logger(), "Found '%lu' servos", servos.size());
 
   battery_pub = this->create_publisher<std_msgs::msg::UInt16>("battery", 10);
   battery_timer =
@@ -45,8 +45,6 @@ Ros2HwPiHat::Ros2HwPiHat() : Node("ros2_hw_pi_hat_interface"), board() {
 
   pos_pub =
       this->create_publisher<std_msgs::msg::Int16MultiArray>("position", 10);
-  joint_state_pub =
-      this->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
   pos_timer =
       this->create_wall_timer(50ms, std::bind(&Ros2HwPiHat::pos_cb, this));
 
@@ -61,6 +59,8 @@ Ros2HwPiHat::Ros2HwPiHat() : Node("ros2_hw_pi_hat_interface"), board() {
   servo_subscriber = this->create_subscription<hw_pi_hat_msgs::msg::Servos>(
       "set_servos_pos", 10,
       std::bind(&Ros2HwPiHat::servo_cb, this, std::placeholders::_1));
+
+  RCLCPP_INFO(this->get_logger(), "Board Connected");
 }
 
 Ros2HwPiHat::~Ros2HwPiHat() {}

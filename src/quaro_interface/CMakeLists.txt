@@ -43,12 +43,18 @@ target_include_directories(hwpihat PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/
 target_link_libraries(hwpihat PUBLIC pthread gpiodcxx)
 
 # Build node
-add_executable(my_node src/ros2_hw_pi_hat.cpp)
-target_include_directories(my_node PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include> ${std_msgs_INCLUDE_DIRS} ${sensor_msgs_INCLUDE_DIRS} ${hw_pi_hat_msgs_INCLUDE_DIRS} ${rclcpp_INCLUDE_DIRS})
-target_link_libraries(my_node PRIVATE ${std_msgs_LIBRARIES} ${sensor_msgs_LIBRARIES} ${hw_pi_hat_msgs_LIBRARIES} ${rclcpp_LIBRARIES} hwpihat)
+add_executable(board src/ros2_hw_pi_hat.cpp)
+target_include_directories(board PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include> ${std_msgs_INCLUDE_DIRS} ${sensor_msgs_INCLUDE_DIRS} ${hw_pi_hat_msgs_INCLUDE_DIRS} ${rclcpp_INCLUDE_DIRS})
+target_link_libraries(board PRIVATE ${std_msgs_LIBRARIES} ${sensor_msgs_LIBRARIES} ${hw_pi_hat_msgs_LIBRARIES} ${rclcpp_LIBRARIES} hwpihat)
+
+## Build node
+add_executable(quaro_interface src/quaro_interface.cpp)
+target_include_directories(quaro_interface PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include> ${std_msgs_INCLUDE_DIRS} ${sensor_msgs_INCLUDE_DIRS} ${rclcpp_INCLUDE_DIRS})
+target_link_libraries(quaro_interface PRIVATE ${std_msgs_LIBRARIES} ${sensor_msgs_LIBRARIES} ${rclcpp_LIBRARIES})
+
 # Install the library and headers
 install(
-    TARGETS my_node hwpihat 
+    TARGETS quaro_interface board hwpihat 
     EXPORT quaro_ros_interfaceTargets 
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
