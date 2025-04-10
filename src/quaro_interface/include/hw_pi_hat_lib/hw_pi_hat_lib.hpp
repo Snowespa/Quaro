@@ -230,6 +230,15 @@ public:
   std::optional<std::pair<uint8_t, uint8_t>> getButton();
 
   /*
+   * get the value of the IMU if available.
+   *
+   * returns:
+   * --------
+   *    - std::optional<float *>: vector of lenght 6 with the imu reading (ax, ay, az, gx, gy, gz).
+   */
+  std::optional<float *> getIMU();
+
+  /*
    * get servo id. Requests servo id (id) on the bus. If available returns id.
    * If not available returns empty optional. Id 254 corresponds to the
    * broadcasting message and shoould return all servo available on the bus.
@@ -411,9 +420,14 @@ private:
 
   void initKey(key_state *state);
 
+  float bytesToFloats(const std::vector<uint8_t> &data, size_t index);
+
   /* ATTRIBUTES */
   std::optional<std::vector<uint8_t>> sysQ;
   std::mutex sysM;
+
+  std::optional<std::vector<uint8_t>> imuQ;
+  std::mutex imuM;
 
   std::optional<std::vector<uint8_t>> servoQ;
   std::mutex servoM;
